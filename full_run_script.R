@@ -320,7 +320,6 @@ data_1 <- data %>%
 # Check skew and normality assumption
 skew_1_bf <- round(skewness(sqrt(data_1$betting_rate)), 3)
 shap_1_bf <- shapiro.test(data_1$betting_rate)
-shap_1_bf <- shapiro_to_text(shap_1_bf$p.value)
 
 
 # Box-Cox transform
@@ -332,7 +331,6 @@ data_1$betting_rate_bc <- boxcoxTransform(data_1$betting_rate + 1,
 
 skew_1_af <- round(skewness(sqrt(data_1$betting_rate_bc)), 3)
 shap_1_af <- shapiro.test(data_1$betting_rate_bc)
-shap_1_af <- shapiro_to_text(shap_1_af$p.value)
 
 
 # Run test
@@ -470,7 +468,7 @@ log_mod_5 <- bglmer(choice ~ reward_value + uncertainty * treatment +
                     data = data_5, fixef.prior = t,
                     family = binomial(link = "logit"))
 
-s_5 <- glmer_report(log_mod_5)
+summary(log_mod_5)
 
 # Nakagawa R^2
 r2_nakagawa(log_mod_5)$R2_conditional
@@ -543,7 +541,6 @@ data_6 <- data %>%
 # Check skew and normality assumption
 skew_6_bf <- round(skewness(sqrt(data_6$betting_rate)), 3)
 shap_6_bf <- shapiro.test(data_6$betting_rate)
-shap_6_bf <- shapiro_to_text(shap_6_bf$p.value)
 
 
 # Box-Cox transform
@@ -555,7 +552,6 @@ data_6$betting_rate_bc <- boxcoxTransform(data_6$betting_rate + 1,
 
 skew_6_af <- round(skewness(sqrt(data_6$betting_rate_bc)), 3)
 shap_6_af <- shapiro.test(data_6$betting_rate_bc)
-shap_6_af <- shapiro_to_text(shap_6_af$p.value)
 
 
 # Run test
