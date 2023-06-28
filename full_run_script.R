@@ -464,8 +464,8 @@ data_5 <- data %>%
 
 log_mod_5 <- bglmer(choice ~ reward_value + uncertainty * treatment +
                       age + gender + major + sequence_number +
-                      previous_choice + reward_exposure + (1 | id),
-                    data = data_5, fixef.prior = t,
+                      previous_choice + reward_exposure + reaction_time +
+                      (1 | id), data = data_5, fixef.prior = t,
                     family = binomial(link = "logit"))
 
 summary(log_mod_5)
@@ -490,23 +490,23 @@ vif_mod_5_out <- usdm::vif(data_5_vif)
 
 # Stepwise model building
 log_mod_5_1 <- bglmer(choice ~ reward_value + uncertainty * treatment +
-                        age + gender + major + (1 | id),
-                      data = data_5, fixef.prior = t,
-                      family = binomial(link = "logit"))
-
-log_mod_5_2 <- bglmer(choice ~ reward_value + uncertainty * treatment +
                         age + gender + major + sequence_number + (1 | id),
                       data = data_5, fixef.prior = t,
                       family = binomial(link = "logit"))
 
+log_mod_5_2 <- bglmer(choice ~ reward_value + uncertainty * treatment +
+                        age + gender + major + sequence_number + reaction_time +
+                        (1 | id), data = data_5, fixef.prior = t,
+                      family = binomial(link = "logit"))
+
 log_mod_5_3 <- bglmer(choice ~ reward_value + uncertainty * treatment +
-                        age + gender + major + sequence_number +
+                        age + gender + major + sequence_number + reaction_time +
                         previous_choice + (1 | id),
                       data = data_5, fixef.prior = t,
                       family = binomial(link = "logit"))
 
 log_mod_5_4 <- bglmer(choice ~ reward_value + uncertainty * treatment +
-                        age + gender + major + sequence_number +
+                        age + gender + major + sequence_number + reaction_time +
                         previous_choice + reward_exposure + (1 | id),
                       data = data_5, fixef.prior = t,
                       family = binomial(link = "logit"))
@@ -602,7 +602,8 @@ ggplot(data_plot_u, aes(x = aaron_mood, y = betting_rate)) +
            width = 0.6) +
   geom_errorbar(aes(ymin = betting_rate - se, ymax = betting_rate + se),
                 position = position_dodge(.9), width = .1) +
-  scale_x_discrete(name = '', breaks = c('Low uncertainty', 'High uncertainty')) +
+  scale_x_discrete(name = '', breaks = c('Low', 'High'),
+                   labels = c('Low uncertainty', 'High uncertainty')) +
   scale_y_continuous(name = 'Betting rate') +
   theme_minimal() +
   theme(axis.title = element_text(size = 14),
