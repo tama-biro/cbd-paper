@@ -1,4 +1,4 @@
-# Craving by Design - code repository
+# Pavlovian Sign-Tracking Distorts Repeated Risk-Taking in Humans
 
 Repository for "Pavlovian Sign-Tracking Distorts Repeated Risk-Taking in Humans" by Elise Payzan-LeNestour, Samuel Thelaus, & Bernard Balleine
 
