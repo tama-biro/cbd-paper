@@ -340,7 +340,7 @@ t_test_1 <- t.test(betting_rate_bc ~ reward_value, data = data_1,
 effect_size_t_1 <- (
   (mean(data_1$betting_rate_bc[data_1$reward_value == 'High']) - mean(data_1$betting_rate_bc[data_1$reward_value == 'Low']))/
     sqrt(
-      (sd(data_1$betting_rate_bc[data_1$reward_value == 'High'])^2 - sd(data_1$betting_rate_bc[data_1$reward_value == 'Low'])^2)/2
+      (sd(data_1$betting_rate_bc[data_1$reward_value == 'High'])^2 + sd(data_1$betting_rate_bc[data_1$reward_value == 'Low'])^2)/2
     )
 )
 effect_size_t_1 <- round(effect_size_t_1, 3)
