@@ -6,10 +6,7 @@ Replicating the results of this paper assumes you have access to [R](https://cra
 and [RStudio](https://posit.co/download/rstudio-desktop/). It also assumes that you know how
 to execute R code using RStudio. 
 
-Data for the project can be found from the following link: 
-
-# TODO: Inlcude link to main data repository
-- Anonymize and add data sorting notebook
+Data for the project can be found by contacting the researchers.
 
 To run the code, the data folder needs to be downloaded and placed in the same directory as the `full_run_script.R` file (main directory of repository). This is such that the data file `data_full.csv` should be in the `./data/data_full.csv` from the script directory.
 
