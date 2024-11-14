@@ -561,7 +561,7 @@ t_test_6 <- t.test(betting_rate_bc ~ uncertainty, data = data_6,
 effect_size_t_6 <- (
   (mean(data_6$betting_rate_bc[data_6$uncertainty == 'High']) - mean(data_6$betting_rate_bc[data_6$uncertainty == 'Low']))/
     sqrt(
-      (sd(data_6$betting_rate_bc[data_6$uncertainty == 'High'])^2 - sd(data_6$betting_rate_bc[data_6$uncertainty == 'Low'])^2)/2
+      (sd(data_6$betting_rate_bc[data_6$uncertainty == 'High'])^2 + sd(data_6$betting_rate_bc[data_6$uncertainty == 'Low'])^2)/2
     )
 )
 effect_size_t_6 <- round(effect_size_t_6, 3)
@@ -657,7 +657,7 @@ t_test_7_2 <- t.test(betting_rate_bc ~ treatment, data = data_7_2)
 effect_size_t_7_2 <- (
   (mean(data_7_2$betting_rate_bc[data_7_2$treatment == 'test']) - mean(data_7_2$betting_rate_bc[data_7_2$treatment == 'control']))/
     sqrt(
-      (sd(data_7_2$betting_rate_bc[data_7_2$treatment == 'test'])^2 - sd(data_7_2$betting_rate_bc[data_7_2$treatment == 'control'])^2)/2
+      (sd(data_7_2$betting_rate_bc[data_7_2$treatment == 'test'])^2 + sd(data_7_2$betting_rate_bc[data_7_2$treatment == 'control'])^2)/2
     )
 )
 effect_size_t_7_2 <- round(effect_size_t_7_2, 3)
