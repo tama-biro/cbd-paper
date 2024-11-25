@@ -555,20 +555,23 @@ shap_6_af <- shapiro.test(data_6$betting_rate_bc)
 
 
 # Run test
-t_test_6 <- t.test(betting_rate_bc ~ uncertainty, data = data_6,
-                   alternative = 'less', paired = TRUE)
+t_test_6 <- t.test(x = data_6$betting_rate_bc[data_6$uncertainty == "Low"],
+                   y = data_6$betting_rate_bc[data_6$uncertainty == "High"],
+                   alternative = 'less',
+                   paired = TRUE)
 
-effect_size_t_6 <- (
-  (mean(data_6$betting_rate_bc[data_6$uncertainty == 'High']) - mean(data_6$betting_rate_bc[data_6$uncertainty == 'Low']))/
-    sqrt(
-      (sd(data_6$betting_rate_bc[data_6$uncertainty == 'High'])^2 + sd(data_6$betting_rate_bc[data_6$uncertainty == 'Low'])^2)/2
-    )
-)
-effect_size_t_6 <- round(effect_size_t_6, 3)
+cohens_d(x = data_6$betting_rate_bc[data_6$uncertainty == "Low"],
+         y = data_6$betting_rate_bc[data_6$uncertainty == "High"],
+         alternative = 'less',
+         paired = TRUE)
 
 # Non-parametric
-wilcox_6 <- wilcox.test(betting_rate ~ uncertainty, data = data_6,
-                        alternative = 'less', paired = TRUE)
+wilcox_6 <- wilcox.test(x = data_6$betting_rate[data_6$uncertainty == "Low"],
+                        y = data_6$betting_rate[data_6$uncertainty == "High"],
+                        alternative = 'less',
+                        paired = TRUE)
+
+effectsize(wilcox_6)
 
 data_plot_u <- data %>%
   filter(block_type == "C") %>%
@@ -652,18 +655,37 @@ bc_72_lambda <- out$lambda[which.max(out$objective)]
 data_7_2$betting_rate_bc <- boxcoxTransform(data_7_2$betting_rate + 1,
                                             lambda = bc_72_lambda)
 
-t_test_7_2 <- t.test(betting_rate_bc ~ treatment, data = data_7_2)
+t_test_7_2 <- t.test(betting_rate_bc ~ treatment,
+                     data = data_7_2,
+                     alternative='less')
+
+# Set up params for Cohen's D
+len_test <- length(data_7_2$betting_rate_bc[data_7_2$treatment == 'test'])
+len_control <- length(data_7_2$betting_rate_bc[data_7_2$treatment == 'control'])
+
+mean_test <- mean(data_7_2$betting_rate_bc[data_7_2$treatment == 'test'])
+mean_control <- mean(data_7_2$betting_rate_bc[data_7_2$treatment == 'control'])
+
+sd_test <- sd(data_7_2$betting_rate_bc[data_7_2$treatment == 'test'])
+sd_control <- sd(data_7_2$betting_rate_bc[data_7_2$treatment == 'control'])
+
 
 effect_size_t_7_2 <- (
-  (mean(data_7_2$betting_rate_bc[data_7_2$treatment == 'test']) - mean(data_7_2$betting_rate_bc[data_7_2$treatment == 'control']))/
+  (mean_test - mean_control)/
     sqrt(
-      (sd(data_7_2$betting_rate_bc[data_7_2$treatment == 'test'])^2 + sd(data_7_2$betting_rate_bc[data_7_2$treatment == 'control'])^2)/2
+      ((len_test-1)*(sd_test^2)+(len_control-1)*(sd_control^2))/(len_test + len_control - 2)
     )
 )
 effect_size_t_7_2 <- round(effect_size_t_7_2, 3)
 
 # Non-parametric
-wilcox_7_2 <- wilcox.test(betting_rate ~ treatment, data = data_7_2)
+wilcox_7_2 <- wilcox.test(x = data_7_2$betting_rate[data_7_2$treatment == "test"],
+                          y = data_7_2$betting_rate[data_7_2$treatment == "control"],
+                          paired = FALSE,
+                          alternative='less',
+                          data = data_7_2)
+
+effectsize(wilcox_7_2)
 
 # Plot test 7 (2)
 data_plot_t <- data_7_2 %>%
