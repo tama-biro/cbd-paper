@@ -7,6 +7,7 @@ suppressMessages({
   library(MuMIn)
   library(performance)
   library(ggsignif)
+  library(effectsize)
 })
 
 setwd(choose.dir())
